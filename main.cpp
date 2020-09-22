@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include "TreeBuilder/XMLBuilder.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
+    PDV::TreeBuilder::XMLBuilder::Parse("file.xml");
+
 
     return app.exec();
 }
