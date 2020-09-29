@@ -1,9 +1,11 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "TreeBuilder/XMLBuilder.h"
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
+    PDV::TreeBuilder::XMLBuilder::Parse("file.xml");
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
@@ -16,7 +18,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-    PDV::TreeBuilder::XMLBuilder::Parse("file.xml");
+
 
 
     return app.exec();

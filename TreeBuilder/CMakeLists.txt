@@ -1,21 +1,27 @@
-cmake_minimum_required(VERSION 3.15)
+set(_target "TreeBuilder")
 
-project(TreeBuilder LANGUAGES CXX)
+#################################################
+# List of project files
+#################################################
 
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -fstrict-aliasing -pedantic-errors -pedantic -Wno-deprecated-declarations -Wno-unused-variable")
-
-find_package(Qt5 COMPONENTS Core REQUIRED)
-
-add_link_options("-shared")
-add_executable(TreeBuilder
+set(_src
     Types.h
     Tree.cpp
     Tree.h
     XMLBuilder.cpp
-    XMLBuilder.h)
+    XMLBuilder.h
+)
 
-#target_link_libraries(TreeBuilder PRIVATE Qt5::Core)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -fstrict-aliasing -pedantic-errors -pedantic -Wno-deprecated-declarations -Wno-unused-variable")
+find_package(Qt5 COMPONENTS Core REQUIRED)
+add_library(${_target} STATIC ${_src} )
+add_link_options("-shared")
+target_link_libraries(${_target}
+   PRIVATE
+   Qt5::Core
+)
+
+
+
