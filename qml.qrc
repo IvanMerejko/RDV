@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>Block.qml</file>
         <file>componentCreation.js</file>
+        <file>FileLoader.qml</file>
     </qresource>
 </RCC>
