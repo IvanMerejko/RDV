@@ -11,29 +11,29 @@ Window
     width: 640
     height: 480
     title: qsTr("Hello World")
-//    Button
-//    {
-//        x: 39
-//        y: 49
-//        text: "add "
-//        font.family: "Arial"
-//        autoRepeat: false
-//        onClicked:
-//        {
-//            MyScript.createSpriteObjects("Block.qml");
-//        }
-//    }
     Button
     {
         x: 39
         y: 49
-        text: "load "
+        text: "add "
         font.family: "Arial"
         autoRepeat: false
         onClicked:
         {
-            MyScript.createSpriteObjects("FileLoader.qml");
+            MyScript.createSpriteObjects("Block.qml");
         }
     }
+//    Button
+//    {
+//        x: 39
+//        y: 49
+//        text: "load "
+//        font.family: "Arial"
+//        autoRepeat: false
+//        onClicked:
+//        {
+//            MyScript.createSpriteObjects("FileLoader.qml");
+//        }
+//    }
 
 }

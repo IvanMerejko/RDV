@@ -2,6 +2,7 @@ import QtQuick 2.12
 
 Item
 {
+    id: element
     height: 100
     width: 100
     Rectangle
@@ -16,16 +17,27 @@ Item
 
     Rectangle
     {
-        height: parent.height * 0.1
-        anchors.top: parent.top
-        anchors.leftMargin: 10
-        width: 20
+        x: 8
+        width: 36
+        height: 14
         color: "white"
+        anchors.top: parent.top
+        anchors.topMargin: 4
         Text
         {
             anchors.fill: parent
             text: qsTr("text")
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.rightMargin: 0
+            anchors.bottomMargin: 0
         }
     }
 }
 
+
+/*##^##
+Designer {
+    D{i:2;anchors_height:10}
+}
+##^##*/

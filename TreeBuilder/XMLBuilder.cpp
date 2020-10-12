@@ -13,19 +13,14 @@ namespace PDV::TreeBuilder
 namespace
 {
 constexpr auto XMLAttribute = "<xmlattr>";
-const boost::property_tree::ptree& emptyPtree()
-{
-    static boost::property_tree::ptree t;
-    return t;
-}
-
+static const boost::property_tree::ptree emptyPtree{};
 void ParseAttributtes(const boost::property_tree::ptree& tree)
 {
-   const auto& attributes = tree.get_child(XMLAttribute, emptyPtree());
+   const auto& attributes = tree.get_child(XMLAttribute, emptyPtree);
    for(const auto& [name, childs] : attributes)
    {
        const auto& value = attributes.get<std::string>(name);
-       qDebug() << name.c_str() << " " << value.c_str();
+       qDebug() << "XMLAttribute = " << name.c_str() << " " << value.c_str();
    }
 }
 
@@ -38,7 +33,7 @@ void ParseXMLElement(const boost::property_tree::ptree& tree)
             ParseAttributtes(tree);
             continue;
         }
-        qDebug() << name.c_str();
+        qDebug() << "name = " << name.c_str();
         for(const auto &[childName, childTree] : childs)
         {
             if(childName == XMLAttribute)
@@ -46,7 +41,7 @@ void ParseXMLElement(const boost::property_tree::ptree& tree)
                 ParseAttributtes(childs);
                 continue;
             }
-            qDebug() << childName.c_str();
+            qDebug() << "childName = " << childName.c_str();
             ParseXMLElement(childTree);
         }
     }
@@ -58,6 +53,7 @@ TreePtr XMLBuilder::Parse(std::string_view)
 {
     boost::property_tree::ptree tree;
     boost::property_tree::read_xml("/home/ivanm/PDV/file.xml", tree);
+    NodePtr root = std::make_shared<Node>();
     ParseXMLElement(tree);
     return nullptr;
 }

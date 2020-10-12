@@ -1,7 +1,7 @@
 #include <memory>
 #include <vector>
 
-namespace PDV::TreeBuilder::Types
+namespace PDV::TreeBuilder
 {
 class Node;
 using NodePtr = std::shared_ptr<Node>;
