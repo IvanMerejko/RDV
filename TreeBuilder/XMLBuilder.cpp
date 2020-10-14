@@ -1,8 +1,8 @@
 #include "XMLBuilder.h"
-#include "Tree.h"
 #include <string_view>
 #include <QFile>
 #include "Types.h"
+#include "Node.h"
 #include <QDebug>
 #include <QXmlStreamReader>
 #include <boost/property_tree/ptree.hpp>
@@ -14,48 +14,51 @@ namespace
 {
 constexpr auto XMLAttribute = "<xmlattr>";
 static const boost::property_tree::ptree emptyPtree{};
-void ParseAttributtes(const boost::property_tree::ptree& tree)
+Attributes ParseAttributtes(const boost::property_tree::ptree& tree)
 {
-   const auto& attributes = tree.get_child(XMLAttribute, emptyPtree);
-   for(const auto& [name, childs] : attributes)
+   Attributes attributes;
+   const auto& XMLAttributes = tree.get_child(XMLAttribute, emptyPtree);
+   for(const auto& [name, childs] : XMLAttributes)
    {
-       const auto& value = attributes.get<std::string>(name);
-       qDebug() << "XMLAttribute = " << name.c_str() << " " << value.c_str();
+       const auto& value = XMLAttributes.get<std::string>(name);
+       attributes.emplace_back(name, value);
    }
+   return attributes;
 }
 
-void ParseXMLElement(const boost::property_tree::ptree& tree)
+NodePtr ParseXMLElement(const boost::property_tree::ptree& tree)
 {
+    auto node = std::make_shared<Node>();
     for(const auto& [name, childs] : tree)
     {
-        if(name == XMLAttribute)
+        if (name == XMLAttribute)
         {
-            ParseAttributtes(tree);
-            continue;
+            node->SetAttributes(ParseAttributtes(tree));
         }
-        qDebug() << "name = " << name.c_str();
-        for(const auto &[childName, childTree] : childs)
+        else
         {
-            if(childName == XMLAttribute)
-            {
-                ParseAttributtes(childs);
-                continue;
-            }
-            qDebug() << "childName = " << childName.c_str();
-            ParseXMLElement(childTree);
+            node->SetName(name);
+            node->AddChild(ParseXMLElement(childs));
         }
     }
+    return node;
 }
 
 }
 
-TreePtr XMLBuilder::Parse(std::string_view)
+NodePtr XMLBuilder::Parse(std::string_view)
 {
-    boost::property_tree::ptree tree;
-    boost::property_tree::read_xml("/home/ivanm/PDV/file.xml", tree);
-    NodePtr root = std::make_shared<Node>();
-    ParseXMLElement(tree);
-    return nullptr;
+    try
+    {
+        boost::property_tree::ptree tree;
+        boost::property_tree::read_xml("/home/ivanm/PDV/file.xml", tree);
+        auto result = ParseXMLElement(tree);
+        return result;
+    }
+    catch(...)
+    {
+        return nullptr;
+    }
 }
 
 }

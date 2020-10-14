@@ -1,13 +1,13 @@
 #pragma once
 #include <string_view>
-#include "Tree.h"
+#include "Types.h"
 namespace PDV::TreeBuilder
 {
 
 class XMLBuilder
 {
 public:
-    static TreePtr Parse(std::string_view fileName);
+    static NodePtr Parse(std::string_view fileName);
 };
 
 }

@@ -5,11 +5,14 @@ set(_target "TreeBuilder")
 #################################################
 
 set(_src
-    Types.h
-    Tree.cpp
-    Tree.h
+    Node.cpp
     XMLBuilder.cpp
+    XMLManager.cpp
+
     XMLBuilder.h
+    Node.h
+    Types.h
+    XMLManager.h
 )
 
 set(CMAKE_CXX_STANDARD 20)
