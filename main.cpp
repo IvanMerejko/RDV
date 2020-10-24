@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include "TreeBuilder/XMLBuilder.h"
+#include "MainWindow.h"
 #include <iostream>
 
 int main(int argc, char *argv[])
@@ -13,14 +14,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("somename");
     app.setOrganizationDomain("somename");
 
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    engine.load(url);
+    PDV::MainWindow mainWindow{"qrc:/main.qml"};
 
 
 

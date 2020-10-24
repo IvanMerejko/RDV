@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(_target "PDV")
+project(PDV)
 
 #################################################
 # List of project files
@@ -8,6 +9,10 @@ set(_target "PDV")
 
 set(_src
     main.cpp
+    MainWindow.cpp
+    MainWindow.h
+    Context.h
+    Types.h
     qml.qrc
 )
 include(build/conanbuildinfo.cmake)
@@ -21,8 +26,10 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -fstrict-aliasing -pedantic-errors -pedantic -Wno-deprecated-declarations -Wno-unused-variable")
+add_compile_options(-lstdc++)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -Werror -fstrict-aliasing -pedantic-errors -pedantic -Wno-deprecated-declarations -Wno-unused-variable")
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
+
 add_subdirectory(TreeBuilder)
 
 add_executable(${_target} ${_src})
