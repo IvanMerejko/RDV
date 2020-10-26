@@ -1,17 +1,11 @@
 #pragma once
 #include <memory>
 #include <QObject>
+#include "TreeBuilder/XMLManager.h"
+#include "Types.h"
 
 namespace PDV
 {
-
-struct QObjectDeleter
-{
-    void operator()(QObject *object)
-    {
-        object->deleteLater();
-    }
-};
 
 template<typename ...Args>
 constexpr auto MakeQObjectUP(Args&&... value)
@@ -22,8 +16,9 @@ constexpr auto MakeQObjectUP(Args&&... value)
 
 struct Context
 {
-    using QObjectPtr = std::unique_ptr<QObject, QObjectDeleter>;
     QObjectPtr m_mainWindow;
+    QObjectPtr m_loadFileButton;
+    TreeBuilder::XMLManager m_xmlManager;
 };
 
 }

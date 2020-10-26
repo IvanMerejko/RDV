@@ -2,23 +2,26 @@
 #include "Types.h"
 #include <deque>
 #include "QDebug"
+#include <QObject>
 namespace PDV::TreeBuilder
 {
-struct Node
+struct Node : public QObject
 {
+    Q_OBJECT
 public:
-    void SetName(const std::string& name) { m_name = name; qDebug() << name.c_str() << " " << m_name.c_str(); }
-    void SetChilds(Nodes&& childs) { m_childs = std::move(childs); }
-    void AddChild(NodePtr child) { m_childs.push_back(std::move(child)); }
+    Node() = default;
 
-    void SetAttributes(Attributes&& attributes) { m_attributes = std::move(attributes); }
-    void AddAttribute(Attribute&& attribute) { m_attributes.push_back(std::move(attribute)); }
+    Q_INVOKABLE void SetName(const QString& name) { m_name = name; }
+    Q_INVOKABLE void AddChild(NodePtr child) { m_childs.push_back(std::move(child)); }
 
-    constexpr const Attributes& GetAttributes() const noexcept { return m_attributes; }
-    constexpr const std::string& GetName() const noexcept { return m_name; }
-    constexpr const Nodes& GetChilds() const noexcept { return m_childs; }
+    Q_INVOKABLE void SetAttributes(const Attributes& attributes) { m_attributes = attributes; }
+    Q_INVOKABLE void AddAttribute(const Attribute& attribute) { m_attributes.push_back(attribute); }
+
+    Q_INVOKABLE constexpr const Attributes& GetAttributes() const noexcept { return m_attributes; }
+    Q_INVOKABLE constexpr const QString& GetName() const noexcept { return m_name; }
+    Q_INVOKABLE constexpr const Nodes& GetChilds() const noexcept { return m_childs; }
 private:
-    std::string m_name;
+    QString m_name;
     Nodes m_childs;
     Attributes m_attributes;
 };

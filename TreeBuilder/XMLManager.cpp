@@ -4,7 +4,7 @@ namespace PDV::TreeBuilder
 {
 void XMLManager::ParseFile(std::string_view fileName)
 {
-    m_root = XMLBuilder::Parse("file.xml");
+    m_root = XMLBuilder::Parse(fileName);
 }
 
 }

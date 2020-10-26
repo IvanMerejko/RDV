@@ -2,11 +2,12 @@
 #include <memory>
 #include <vector>
 #include <deque>
+#include <QSharedPointer>
 
 namespace PDV::TreeBuilder
 {
 class Node;
-using NodePtr = std::shared_ptr<Node>;
+using NodePtr = QSharedPointer<Node>;
 using Nodes = std::deque<NodePtr>;
 
 using Attribute = std::pair<std::string, std::string>;

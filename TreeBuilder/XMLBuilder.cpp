@@ -28,7 +28,7 @@ Attributes ParseAttributtes(const boost::property_tree::ptree& tree)
 
 NodePtr ParseXMLElement(const boost::property_tree::ptree& tree)
 {
-    auto node = std::make_shared<Node>();
+    auto node = NodePtr::create();
     for(const auto& [name, childs] : tree)
     {
         if (name == XMLAttribute)
@@ -37,7 +37,7 @@ NodePtr ParseXMLElement(const boost::property_tree::ptree& tree)
         }
         else
         {
-            node->SetName(name);
+            node->SetName(name.c_str());
             node->AddChild(ParseXMLElement(childs));
         }
     }

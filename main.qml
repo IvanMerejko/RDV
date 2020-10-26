@@ -1,39 +1,27 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.12
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Styles 1.2
 import QtQuick.Dialogs 1.0
 import "componentCreation.js" as MyScript
 
 Window
 {
+    signal displayRoot(string nodeName, variant attributes)
     id: mainWindow
+    objectName: "mainWindow"
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
     Button
     {
-        x: 39
-        y: 49
+        objectName: "loadButton"
+        x: 5
+        y: 5
         text: "add "
-        font.family: "Arial"
-        autoRepeat: false
-        onClicked:
-        {
-            MyScript.createSpriteObjects("Block.qml");
-        }
     }
-//    Button
-//    {
-//        x: 39
-//        y: 49
-//        text: "load "
-//        font.family: "Arial"
-//        autoRepeat: false
-//        onClicked:
-//        {
-//            MyScript.createSpriteObjects("FileLoader.qml");
-//        }
-//    }
-
+    onDisplayRoot: MyScript.createSpriteObjects("Block.qml", nodeName)
 }

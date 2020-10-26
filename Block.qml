@@ -1,43 +1,60 @@
 import QtQuick 2.12
+import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Controls 1.2
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls.Styles 1.2
+import QtQuick.Dialogs 1.0
 
 Item
 {
+    property string nodeName: ""
+    property int possibleNodeNameLength: (element.width  - textField.x * 2 ) / 10
+    property variant attributes: ({})
+
     id: element
-    height: 100
-    width: 100
+    height: 200
+    width: 200
     Rectangle
     {
         anchors.fill: parent
-        anchors.topMargin: 10
+        anchors.topMargin: textField.height / 2
         border.color: "black"
         border.width: 2
-        height: parent.height * 0.9
+        height: parent.height - textField.height / 2
         width: parent.width
     }
-
-    Rectangle
+    TextField
     {
-        x: 8
-        width: 36
-        height: 14
-        color: "white"
+        id: textField
+        x: 10
         anchors.top: parent.top
         anchors.topMargin: 4
-        Text
+        text: nodeName
+        width: getWidthForElementName()
+        height: 30
+        onTextChanged:
         {
-            anchors.fill: parent
-            text: qsTr("text")
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            anchors.rightMargin: 0
-            anchors.bottomMargin: 0
+            element.nodeName = textField.text
         }
+        font.pixelSize: 15
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
     }
-}
 
 
-/*##^##
-Designer {
-    D{i:2;anchors_height:10}
+    function canDisplayAllText(textToDisplay)
+    {
+        return textToDisplay.length < element.possibleNodeNameLength
+    }
+
+    function getWidthForElementName()
+    {
+        return canDisplayAllText(element.nodeName) ? element.nodeName.length * 10 : element.width  - textField.x * 2;
+    }
+
+    property var childs: []
 }
-##^##*/
+
