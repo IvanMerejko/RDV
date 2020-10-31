@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <algorithm>
 #include <QDebug>
+#include <QGuiApplication>
 #include <boost/range/algorithm.hpp>
 #include "TreeBuilder/XMLBuilder.h"
 #include "TreeBuilder/Types.h"
@@ -22,19 +23,19 @@ MainWindow::MainWindow(std::string_view fileName)
     initializeContext();
     createConnectionWithQmlObjects();
 
-    m_xmlManager.ParseFile("file.xml");
+    m_xmlManager.ParseFile(QCoreApplication::applicationDirPath());
 }
 
 void MainWindow::createConnectionWithQmlObjects()
 {
 
-#define connectIfInitialize(signalObject, signalMethod, slotObject, slotMethod)\
-    if ( !(signalObject) ) \
-    { \
-        qDebug() << "Error: " << #signalObject; \
-    }\
-    else\
-    {\
+#define connectIfInitialize(signalObject, signalMethod, slotObject, slotMethod)              \
+    if ( !(signalObject) )                                                                   \
+    {                                                                                        \
+        qDebug() << "Error: " << #signalObject;                                              \
+    }                                                                                        \
+    else                                                                                     \
+    {                                                                                        \
         connect(signalObject.get(), SIGNAL(signalMethod()), slotObject, SLOT(slotMethod())); \
     }
 
@@ -43,9 +44,27 @@ void MainWindow::createConnectionWithQmlObjects()
 
 void MainWindow::loadNewXMLFile()
 {
-    qDebug() << "loadNewXMLFile";
-    connect(this, SIGNAL(displayXMLFile(const QString&, const QVariant&)), m_mainWindow.get(), SIGNAL(displayRoot(const QString&, const QVariant&)));
-    emit displayXMLFile(m_xmlManager.GetRoot()->GetName(), QVariant{m_xmlManager.GetRoot()->GetAttributes()});
+    connect(this, SIGNAL(displayXMLFile(const QString&)), m_mainWindow.get(), SIGNAL(displayRoot(const QString&)));
+
+    const auto& root = m_xmlManager.GetRoot();
+    emit displayXMLFile(root->GetName());
+    const auto& childs = root->GetChilds();
+    for(const auto& child : childs)
+    {
+        qDebug() << "1 " << child->GetName();
+        displayNode(child);
+    }
+}
+
+void MainWindow::displayNode(const TreeBuilder::NodePtr& node)
+{
+    emit displayXMLFile(node->GetName());
+    const auto& childs = node->GetChilds();
+    for(const auto& child : childs)
+    {
+        qDebug() << "2 " << child->GetName();
+        displayNode(child);
+    }
 }
 
 void MainWindow::initializeWindowPtr()

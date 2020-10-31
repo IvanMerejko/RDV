@@ -1,7 +1,8 @@
 var component;
+const components = [];
 var sprite;
-var x_ = 10;
-var y_ = 10;
+var x_ = 0;
+var y_ = 50;
 var id = 1;
 
 
@@ -16,8 +17,10 @@ function createSpriteObjects(name, nodeName) {
 function finishCreation(nodeName) {
     if (component.status === Component.Ready) {
         sprite = component.createObject(mainWindow, {id: id, x: 100 + x_, y: 100 + y_, nodeName: nodeName});
-        x_ += 10;
-        y_ += 10;
+        components.push(component);
+        component = null;
+        x_ += 0;
+        y_ += 50;
         id ++;
         if (sprite === null) {
             // Error Handling

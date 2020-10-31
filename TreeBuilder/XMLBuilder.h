@@ -7,7 +7,7 @@ namespace PDV::TreeBuilder
 class XMLBuilder
 {
 public:
-    static NodePtr Parse(std::string_view fileName);
+    static NodePtr Parse(const QString& fileName);
 };
 
 }

@@ -14,10 +14,11 @@ public:
     explicit MainWindow(std::string_view fileName);
 
 signals:
-    void displayXMLFile(const QString&, const QVariant&);
+    void displayXMLFile(const QString&);
 
 public slots:
     void loadNewXMLFile();
+    void displayNode(const TreeBuilder::NodePtr&);
 
 private:
     void initializeWindowPtr();

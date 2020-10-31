@@ -12,7 +12,7 @@ public:
     Node() = default;
 
     Q_INVOKABLE void SetName(const QString& name) { m_name = name; }
-    Q_INVOKABLE void AddChild(NodePtr child) { m_childs.push_back(std::move(child)); }
+    Q_INVOKABLE void AddChild(NodePtr child) { m_childs.push_back(child); }
 
     Q_INVOKABLE void SetAttributes(const Attributes& attributes) { m_attributes = attributes; }
     Q_INVOKABLE void AddAttribute(const Attribute& attribute) { m_attributes.push_back(attribute); }

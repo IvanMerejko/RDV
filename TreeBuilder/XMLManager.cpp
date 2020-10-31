@@ -2,7 +2,7 @@
 #include "XMLBuilder.h"
 namespace PDV::TreeBuilder
 {
-void XMLManager::ParseFile(std::string_view fileName)
+void XMLManager::ParseFile(const QString& fileName)
 {
     m_root = XMLBuilder::Parse(fileName);
 }

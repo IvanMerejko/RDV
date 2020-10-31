@@ -8,8 +8,9 @@ import QtQuick.Dialogs 1.0
 
 Item
 {
+    property int textMultiplier: 30
     property string nodeName: ""
-    property int possibleNodeNameLength: (element.width  - textField.x * 2 ) / 10
+    property int possibleNodeNameLength: (element.width  - textField.x * 2 ) / textMultiplier
     property variant attributes: ({})
 
     id: element
@@ -29,12 +30,13 @@ Item
         id: textField
         x: 10
         anchors.top: parent.top
-        anchors.topMargin: 4
+        anchors.topMargin: 0
         text: nodeName
         width: getWidthForElementName()
         height: 30
         onTextChanged:
         {
+            console.log(nodeName)
             element.nodeName = textField.text
         }
         font.pixelSize: 15
@@ -52,7 +54,7 @@ Item
 
     function getWidthForElementName()
     {
-        return canDisplayAllText(element.nodeName) ? element.nodeName.length * 10 : element.width  - textField.x * 2;
+        return canDisplayAllText(element.nodeName) ? element.nodeName.length * textMultiplier : element.width  - textField.x * 2;
     }
 
     property var childs: []

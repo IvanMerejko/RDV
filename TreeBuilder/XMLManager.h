@@ -7,7 +7,7 @@ namespace PDV::TreeBuilder
 class XMLManager
 {
 public:
-    void ParseFile(std::string_view fileName);
+    void ParseFile(const QString& fileName);
 
     const NodePtr& GetRoot() const noexcept { return m_root; }
 

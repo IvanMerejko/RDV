@@ -1,15 +1,13 @@
 #pragma once
-#include <memory>
-#include <vector>
-#include <deque>
 #include <QSharedPointer>
+#include <qqueue.h>
 
 namespace PDV::TreeBuilder
 {
 class Node;
 using NodePtr = QSharedPointer<Node>;
-using Nodes = std::deque<NodePtr>;
+using Nodes = QQueue<NodePtr>;
 
-using Attribute = std::pair<std::string, std::string>;
-using Attributes = std::vector<Attribute>;
+using Attribute = QPair<QString, QString>;
+using Attributes = QVector<Attribute>;
 }

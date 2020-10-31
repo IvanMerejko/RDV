@@ -9,7 +9,7 @@ import "componentCreation.js" as MyScript
 
 Window
 {
-    signal displayRoot(string nodeName, variant attributes)
+    signal displayRoot(string nodeName)
     id: mainWindow
     objectName: "mainWindow"
     visible: true
